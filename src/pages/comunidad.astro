@@ -4,26 +4,26 @@ import { Layout } from "@globals"
 ---
 
 <Layout title="Comunidad" bg="/3.png">
-	<section>
-		<h1>Comunidad</h1>
+  <section>
+    <h1>Comunidad</h1>
     <form action="">
-      <a href="/catalogo"  class="btn">Catalogo</a>
+      <a href="/catalogo" class="btn">Catalogo</a>
     </form>
     <footer>
       <a href="/" class="btn menu">Menu principal</a>
-      <a href="/comunidad" class="btn comunidad">Comunidad</a>
+      <a href="/contacto" class="btn comunidad">Contacto</a>
     </footer>
-	</section>
+  </section>
 </Layout>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 3em;
-		justify-content: space-around;
-	}
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    justify-content: space-around;
+  }
   form {
     display: grid;
     place-items: center;
@@ -33,8 +33,8 @@ import { Layout } from "@globals"
 
   form a.btn {
     background-color: var(--amarillo);
-    padding-block: .75em;
-    opacity: .8;
+    padding-block: 0.75em;
+    opacity: 0.8;
   }
 
   footer {
@@ -56,6 +56,4 @@ import { Layout } from "@globals"
     background-color: var(--verde);
     color: #fff;
   }
-
-
 </style>
