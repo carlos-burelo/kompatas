@@ -1,0 +1,173 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Agregar mascota" bg="/5.png">
+  <section>
+    <h1>Agregar mascota</h1>
+    <div class="contenedor">
+      <div class="titlebar">
+        Por favor, Rellene los campos solicitados a continuación :)
+      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nombre</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>Direccion</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>Telefono</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>Empleo</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>¿Tiene casa propia?</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>¿Cuanto gana mensualmente?</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>¿Porque quiere adoptar una mascota?</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>¿Posee algun espacio libre?</td>
+            <td>
+              <input type="text" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button>Enviar</button>
+    </div>
+    <footer>
+      <a href="/" class="btn menu">Menu principal</a>
+      <a href="/estado" class="btn comunidad">Estado</a>
+    </footer>
+  </section>
+</Layout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    justify-content: space-around;
+  }
+
+  .contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    justify-content: center;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  td {
+    font-size: 0.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+  tbody tr {
+    opacity: 0.8;
+    background-color: #fff;
+    padding: 0.5em 1em;
+    color: #000;
+  }
+  tbody tr td {
+    border: solid 3px var(--rosa-claro);
+  }
+
+  tbody tr td:nth-child(odd) {
+    background-color: var(--morado-claro);
+    border-color: #fff;
+  }
+
+  tbody tr td:nth-child(even) {
+    background-color: var(--rosa-claro);
+    border-color: #fff;
+  }
+
+  tbody tr td:nth-child(1) {
+    width: 40%;
+  }
+  tbody tr td:nth-child(2) {
+    width: 60%;
+  }
+  tbody tr td:nth-child(2) input {
+    width: 100%;
+    padding: 0.5em 0;
+    border: none;
+    background-color: transparent;
+  }
+
+  .titlebar {
+    text-align: center;
+    background-color: var(--violeta-claro);
+    border: solid 3px #fff;
+    color: #000;
+    display: block;
+    padding: 1em;
+    width: 100%;
+  }
+
+  .contenedor button {
+    background-color: var(--violeta);
+    border: solid 3px #fff;
+    color: #000;
+    padding: 1em;
+    border-radius: 2em;
+    padding: 1em 2em;
+    font-weight: bold;
+  }
+  footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer a {
+    padding: 1em !important;
+  }
+
+  .menu {
+    color: #fff;
+  }
+
+  .comunidad {
+    background-color: var(--verde);
+    color: #fff;
+  }
+</style>
