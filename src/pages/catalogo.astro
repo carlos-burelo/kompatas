@@ -1,0 +1,54 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Catalogo" bg="/3.png">
+  <section>
+    <h1>Catalogo</h1>
+
+    <!-- pdf iframe  -->
+    <iframe src="" title="catalogo.pdf"></iframe>
+
+    <footer>
+      <a href="/" class="btn menu">Menu principal</a>
+      <a href="/contacto" class="btn comunidad">Contacto</a>
+    </footer>
+  </section>
+</Layout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    justify-content: space-around;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100vh;
+    border: none;
+  }
+
+  footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer a {
+    padding: 1em 1.5em !important;
+  }
+
+  .menu {
+    color: #fff;
+  }
+
+  .comunidad {
+    background-color: var(--verde);
+    color: #fff;
+  }
+</style>

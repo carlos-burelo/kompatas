@@ -1,0 +1,47 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Mascotas">
+  <section>
+    <h1>Mascotas</h1>
+    <a href="/catalogo" class="btn">Catalogo</a>
+    <div class="otros">
+      <a href="/" class="btn menu">Menu principal</a>
+      <a href="/contacto" class="btn contacto">Contacto</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8em;
+    justify-content: space-around;
+  }
+
+  section a {
+    background-color: var(--amarillo) !important;
+  }
+
+  .otros {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .otros a {
+    padding-inline: 1em;
+  }
+  .contacto {
+    background-color: var(--verde) !important;
+  }
+
+  .menu {
+    background-color: var(--azul) !important;
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Iniciar sesión" bg="/1.jpg">
+	<section>
+    <header>
+      <img src="/logo.png" alt="">
+      <h2>Adopta a un amigo</h2>
+      <h3>¡No compres!</h3>
+    </header>
+    <form action="">
+      <input type="text" placeholder="Usuario"/>
+      <input type="password" placeholder="Contraseña"/>
+      <button class="btn">Iniciar sesión</button>
+      <a href="/registro" class="btn registrarse">Registrarse</a>
+    </form>
+    <footer>
+      <a href="/admin" class="btn">Admin</a>
+    </footer>
+	</section>
+</Layout>
+
+<style>
+  header {
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+  img {
+    width: 100%;
+    max-width: 250px;
+  
+  }
+
+  h2 {
+    text-shadow: 1px 1px 10px #000;
+  }
+
+  h3 {
+    text-shadow: 1px 1px 10px #000;
+    color: var(--rosa-claro);
+  }
+	section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 3em;
+    justify-content: space-around;
+	}
+  
+  form {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    gap: 1em;
+  }
+
+  button.btn {
+    background-color: var(--amarillo);
+    padding-inline: 2em;
+    width: fit-content;
+    border-color: var(--azul-oscuro);
+  }
+
+  .registrarse {
+    background-color: var(--azul-oscuro);
+    padding-inline: 2em;
+  }
+
+
+
+  footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  footer a {
+    background-color: var(--verde) !important; 
+    padding-inline: 2em !important;
+    color: #fff !important;
+  }
+
+</style>

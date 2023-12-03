@@ -1,0 +1,39 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Panel admin" bg="/5.png">
+  <section>
+    <h1>Admin</h1>
+    <div class="links">
+      <a class="btn" href="/mascotas">Agregar mascota</a>
+      <a class="btn" href="/adopcion">Eliminar mascota</a>
+      <a class="btn" href="/comunidad">Solicitudes de adopción</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+  }
+  .links a {
+    background: linear-gradient(
+      90deg,
+      rgba(135, 83, 236, 1) 0%,
+      rgba(102, 213, 220, 1) 100%
+    );
+    padding: 1em 2em;
+  }
+</style>

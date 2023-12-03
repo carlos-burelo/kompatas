@@ -1,0 +1,61 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Comunidad" bg="/3.png">
+	<section>
+		<h1>Comunidad</h1>
+    <form action="">
+      <a href="/catalogo"  class="btn">Catalogo</a>
+    </form>
+    <footer>
+      <a href="/" class="btn menu">Menu principal</a>
+      <a href="/comunidad" class="btn comunidad">Comunidad</a>
+    </footer>
+	</section>
+</Layout>
+
+<style>
+	section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 3em;
+		justify-content: space-around;
+	}
+  form {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    gap: 1em;
+  }
+
+  form a.btn {
+    background-color: var(--amarillo);
+    padding-block: .75em;
+    opacity: .8;
+  }
+
+  footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer a {
+    padding: 1em 1.5em !important;
+  }
+
+  .menu {
+    color: #fff;
+  }
+
+  .comunidad {
+    background-color: var(--verde);
+    color: #fff;
+  }
+
+
+</style>

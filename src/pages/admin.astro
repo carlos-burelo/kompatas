@@ -1,0 +1,39 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Admin" bg="/1.jpg">
+	<section>
+		<h1>Admin</h1>
+    <form action="">
+      <input type="text" placeholder="Usuario"/>
+      <input type="password" placeholder="Contraseña"/>
+      <button class="btn">Aceptar</button>
+    </form>
+	</section>
+</Layout>
+
+<style>
+	section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 3em;
+		justify-content: space-around;
+	}
+  form {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    gap: 1em;
+  }
+
+  button.btn {
+    background-color: var(--amarillo);
+    padding-inline: 2em;
+    width: fit-content;
+    border-color: var(--azul-oscuro);
+  }
+
+</style>

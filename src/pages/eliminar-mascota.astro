@@ -1,0 +1,128 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Eliminar mascota" bg="/5.png">
+  <section>
+    <h1>Eliminar mascota</h1>
+    <div class="contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Color</th>
+            <th>Raza</th>
+            <th>Tamaño</th>
+            <th>Selección</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <img src="/2.png" alt="Perro" />
+            </td>
+            <td>Blanco</td>
+            <td>Chihuahua</td>
+            <td>Pequeño</td>
+            <td>Seleccionar</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="/2.png" alt="Perro" />
+            </td>
+            <td>Blanco</td>
+            <td>Chihuahua</td>
+            <td>Pequeño</td>
+            <td>Seleccionar</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="/2.png" alt="Perro" />
+            </td>
+            <td>Blanco</td>
+            <td>Chihuahua</td>
+            <td>Pequeño</td>
+            <td>Seleccionar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer>
+      <a href="/" class="btn menu">Menu principal</a>
+      <a href="/eliminar-mascota" class="btn comunidad"
+        >Solicitudes de adopcion</a
+      >
+    </footer>
+  </section>
+</Layout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    justify-content: space-around;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    font-size: 0.8em;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  tr th {
+    background-color: var(--amarillo);
+    padding: 0.5em 1em;
+    border: solid 2px #fff;
+    color: #000;
+  }
+
+  tbody tr {
+    opacity: 0.8;
+    background-color: #fff;
+    padding: 0.5em 1em;
+
+    color: #000;
+  }
+  tbody tr td {
+    border: solid 3px var(--rosa-claro);
+  }
+
+  td img {
+    width: 100%;
+    max-width: 80px;
+    max-height: 80px;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer a {
+    padding: 1em !important;
+    font-size: 0.85em !important;
+  }
+
+  .menu {
+    color: #fff;
+  }
+
+  .comunidad {
+    background-color: var(--verde);
+    color: #fff;
+  }
+</style>
