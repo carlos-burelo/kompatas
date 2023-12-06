@@ -1,8 +1,8 @@
 ---
 // Component imports
 import { Layout } from "@globals"
+import { DB } from "src/db"
 if (!Astro.cookies.has("usuario")) {
-  // redirect using Response
   return new Response("", {
     status: 302, // redirect
     headers: {
@@ -10,6 +10,20 @@ if (!Astro.cookies.has("usuario")) {
     }
   })
 }
+
+const { value } = Astro.cookies.get("usuario")
+const usuario: Usuario = JSON.parse(value)
+
+if (!Boolean(usuario.es_admin)) {
+  return new Response("", {
+    status: 302, // redirect
+    headers: {
+      Location: "/"
+    }
+  })
+}
+
+const mascotas = await DB.obtenerMascotasDisponibles()
 ---
 
 <Layout title="Agregar mascota" bg="/5.png">
@@ -31,30 +45,26 @@ if (!Astro.cookies.has("usuario")) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
-          </tr>
-          <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
-          </tr>
-          <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
-          </tr>
+          {
+            mascotas.length > 0 ? (
+              mascotas.map((mascota) => {
+                return (
+                  <tr>
+                    <td>
+                      <img src={mascota.url_imagen} alt="foto de mascota" />
+                    </td>
+                    <td>{mascota.color}</td>
+                    <td>{mascota.raza}</td>
+                    <td>{mascota.tamaño}</td>
+                  </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colspan="4">No hay mascotas disponibles</td>
+              </tr>
+            )
+          }
         </tbody>
       </table>
       <button id="add-pet">Añadir mascota</button>
@@ -68,8 +78,11 @@ if (!Astro.cookies.has("usuario")) {
   <dialog>
     <form id="myForm">
       <h2>Agregar mascota</h2>
-      <label for="name">Foto (URL)</label>
-      <input type="text" id="name" name="foto" />
+      <label for="url_imagen">Foto (URL)</label>
+      <input type="text" id="name" name="url_imagen" />
+
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" />
 
       <label for="color">Color</label>
       <input type="text" id="color" name="color" />
@@ -99,12 +112,18 @@ if (!Astro.cookies.has("usuario")) {
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
 
-    const res = await fetch("/api/agregar-mascota", {
+    const res = await fetch("/api/mascotas", {
       method: "POST",
       body: JSON.stringify(data)
     })
-
     dialog.close()
+
+    if (res.ok) {
+      alert("Mascota agregada correctamente")
+      location.reload()
+    } else {
+      alert("Ocurrió un error")
+    }
   })
 </script>
 

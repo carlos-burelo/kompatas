@@ -1,6 +1,8 @@
 ---
 // Component imports
 import { Layout } from "@globals"
+import { DB } from "src/db"
+
 if (!Astro.cookies.has("usuario")) {
   // redirect using Response
   return new Response("", {
@@ -10,6 +12,10 @@ if (!Astro.cookies.has("usuario")) {
     }
   })
 }
+
+const solicitudes = await DB.obtenerSolicitudesPendientes()
+
+console.log(solicitudes)
 ---
 
 <Layout title="Solicitudes" bg="/6.jpg">
@@ -29,33 +35,31 @@ if (!Astro.cookies.has("usuario")) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Emilio Perez Gonzales</td>
-            <td>
-              <div class="opciones">
-                <button>Aceptar</button>
-                <button>Eliminar</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Chihuahua</td>
-            <td>
-              <div class="opciones">
-                <button>Aceptar</button>
-                <button>Eliminar</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Chihuahua</td>
-            <td>
-              <div class="opciones">
-                <button>Aceptar</button>
-                <button>Eliminar</button>
-              </div>
-            </td>
-          </tr>
+          {
+            solicitudes.length > 0 ? (
+              solicitudes.map((solicitud) => {
+                return (
+                  <tr data-id={solicitud.id_adopcion}>
+                    <td>{solicitud.nombre}</td>
+                    <td>
+                      <div class="opciones">
+                        <button data-id={solicitud.id_adopcion} id="aceptar">
+                          Aceptar
+                        </button>
+                        <button data-id={solicitud.id_adopcion} id="denegar">
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colspan="2">No hay solicitudes pendientes</td>
+              </tr>
+            )
+          }
         </tbody>
       </table>
     </div>
@@ -63,6 +67,36 @@ if (!Astro.cookies.has("usuario")) {
       <a href="/" class="btn menu">Menu principal</a>
     </footer>
   </section>
+  <script>
+    document.querySelector("#aceptar").addEventListener("click", aceptar)
+    document.querySelector("#denegar").addEventListener("click", declinar)
+
+    async function aceptar(e) {
+      const id = e.target.dataset.id
+
+      console.log(e)
+      const res = await fetch(`/api/solicitudes`, {
+        method: "PUT",
+        body: JSON.stringify({ id })
+      })
+      const data = await res.json()
+      if (data.status === "success") {
+        window.location.reload()
+      }
+    }
+
+    async function declinar(e) {
+      const id = e.target.dataset.id
+      const res = await fetch(`/api/solicitudes`, {
+        method: "DELETE",
+        body: JSON.stringify({ id })
+      })
+      const data = await res.json()
+      if (data.status === "success") {
+        window.location.reload()
+      }
+    }
+  </script>
 </Layout>
 
 <style>

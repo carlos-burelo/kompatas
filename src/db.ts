@@ -1,8 +1,8 @@
-import { createConnection} from 'mysql2/promise'
+import { createConnection, Connection} from 'mysql2/promise'
 
 
 export class DB {
-  private static connection: any;
+  private static connection: Connection;
 
   static async connect() {
     if (!this.connection) {
@@ -102,9 +102,42 @@ export class DB {
     return resultado;
   }
 
-  static async obtenerFormularios() {
+  static async obtenerSolicitudesPendientes() {
     const connection = await this.connect();
-    const [resultado] = await connection.execute('SELECT * FROM formulario');
-    return resultado as Formulario[];
+    const [resultado] = await connection.execute(`SELECT f.*, u.*, a.id_adopcion FROM formulario f LEFT JOIN adopcion a ON f.id_usuario = a.id_usuario LEFT JOIN usuario u ON f.id_usuario = u.id_usuario WHERE a.id_adopcion IS NULL OR a.estado_adopcion = 'En proceso'`);
+    return resultado as (Formulario & Usuario & Adopcion )[];
+  }
+
+  static async aprobarSolicitud(id: number) {
+    const connection = await this.connect();
+    const [resultado] = await connection.execute('UPDATE adopcion SET estado_adopcion = "Aprobado" WHERE id_adopcion = ?', [id]);
+    return resultado;
+  }
+
+  static async rechazarSolicitud(id: number) {
+    const connection = await this.connect();
+    const [resultado] = await connection.execute('UPDATE adopcion SET estado_adopcion = "Rechazado" WHERE id_adopcion = ?', [id]);
+    return resultado;
+  }
+
+  static async obtenerMascotasDisponibles() {
+    const connection = await this.connect();
+    const [resultado] = await connection.execute(`SELECT m.* FROM mascota m LEFT JOIN adopcion a ON m.id_mascota = a.id_mascota WHERE a.id_adopcion IS NULL`)
+    return resultado as (Mascota & Adopcion)[];
+  }
+
+  static async eliminarMascota(id: number) {
+    const connection = await this.connect();
+    const [resultado] = await connection.execute('DELETE FROM mascota WHERE id_mascota = ?', [id]);
+    return resultado;
+  }
+
+  static async mascotaEnProceso(id_mascota: number, id_usuario: number) {
+    // to format YYYY-MM-DD
+    const fecha = new Date().toISOString().slice(0, 10);
+    const estado = 'En proceso';
+    const connection = await this.connect();
+    const [resultado] = await connection.execute('INSERT INTO adopcion (id_mascota, id_usuario, fecha, estado_adopcion) VALUES (?, ?, ?, ?)', [id_mascota, id_usuario, fecha, estado]);
+    return resultado;
   }
 }

@@ -1,6 +1,7 @@
 ---
 // Component imports
 import { Layout } from "@globals"
+import { DB } from "src/db"
 if (!Astro.cookies.has("usuario")) {
   // redirect using Response
   return new Response("", {
@@ -10,6 +11,19 @@ if (!Astro.cookies.has("usuario")) {
     }
   })
 }
+const { value } = Astro.cookies.get("usuario")
+const usuario: Usuario = JSON.parse(value)
+
+if (!Boolean(usuario.es_admin)) {
+  return new Response("", {
+    status: 302, // redirect
+    headers: {
+      Location: "/"
+    }
+  })
+}
+
+const mascotas = await DB.obtenerMascotasDisponibles()
 ---
 
 <Layout title="Eliminar mascota" bg="/5.png">
@@ -27,33 +41,29 @@ if (!Astro.cookies.has("usuario")) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
-            <td>Seleccionar</td>
-          </tr>
-          <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
-            <td>Seleccionar</td>
-          </tr>
-          <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
-            <td>Seleccionar</td>
-          </tr>
+          {
+            mascotas.length > 0 ? (
+              mascotas.map((mascota) => {
+                return (
+                  <tr>
+                    <td>
+                      <img src={mascota.url_imagen} alt={mascota.nombre} />
+                    </td>
+                    <td>{mascota.color}</td>
+                    <td>{mascota.raza}</td>
+                    <td>{mascota.tamaño}</td>
+                    <td>
+                      <button data-id={mascota.id_mascota}>Eliminar</button>
+                    </td>
+                  </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colspan="5">No hay mascotas disponibles</td>
+              </tr>
+            )
+          }
         </tbody>
       </table>
     </div>
@@ -62,6 +72,26 @@ if (!Astro.cookies.has("usuario")) {
       <a href="/solicitudes" class="btn comunidad">Solicitudes de adopcion</a>
     </footer>
   </section>
+
+  <script>
+    // @ts-nocheck
+    const botones = document.querySelectorAll("button")
+    botones.forEach((boton) => {
+      boton.addEventListener("click", async (e) => {
+        const id = e.target.dataset.id
+        const res = await fetch(`/api/mascotas`, {
+          method: "DELETE",
+          body: JSON.stringify({ id })
+        })
+        const data = await res.json()
+        if (data.ok) {
+          window.location.reload()
+        } else {
+          alert("Ocurrio un error")
+        }
+      })
+    })
+  </script>
 </Layout>
 
 <style>

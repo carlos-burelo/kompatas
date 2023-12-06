@@ -10,9 +10,30 @@ if (!Astro.cookies.has("usuario")) {
     }
   })
 }
+const { value } = Astro.cookies.get("usuario")
+const usuario: Usuario = JSON.parse(value)
+
+if (!Boolean(usuario.es_admin)) {
+  return new Response("", {
+    status: 302, // redirect
+    headers: {
+      Location: "/"
+    }
+  })
+}
+
+const url = new URL(Astro.url)
+const id_mascota = url.searchParams.get("id_mascota")
 ---
 
 <Layout title="Agregar mascota" bg="/7.jpg">
+  <script>
+    if (!location.search.includes("id_mascota")) {
+      alert("No ha seleccionado una mascota")
+      location.href = "/mascotas"
+    }
+  </script>
+
   <section>
     <header>
       <h1>Adopcion</h1>
@@ -25,54 +46,65 @@ if (!Astro.cookies.has("usuario")) {
         Por favor, Rellene los campos solicitados a continuación :)
       </div>
       <form>
+        <input type="hidden" name="id_usuario" value={usuario.id_usuario} />
+        <input type="hidden" name="id_mascota" value={id_mascota} />
         <table>
           <tbody>
             <tr>
               <td>Nombre</td>
               <td>
-                <input type="text" name="nombre" />
+                <input
+                  type="text"
+                  name="nombre"
+                  required
+                  value={usuario.nombre +
+                    " " +
+                    usuario.apellido_1 +
+                    " " +
+                    usuario.apellido_2}
+                />
               </td>
             </tr>
             <tr>
               <td>Direccion</td>
               <td>
-                <input type="text" name="direccion" />
+                <input type="text" name="direccion" required />
               </td>
             </tr>
             <tr>
               <td>Telefono</td>
               <td>
-                <input type="tel" name="telefono" />
+                <input type="number" name="telefono" required />
               </td>
             </tr>
             <tr>
               <td>Empleo</td>
               <td>
-                <input type="text" name="empleo" />
+                <input type="text" name="empleo" required />
               </td>
             </tr>
             <tr>
               <td>¿Tiene casa propia?</td>
               <td>
-                <input type="text" name="tiene_casa_propia" list="sino" />
+                <input type="checkbox" name="tiene_casa_propia" required />
               </td>
             </tr>
             <tr>
               <td>¿Cuanto gana mensualmente?</td>
               <td>
-                <input type="number" name="ingresos_mensuales" />
+                <input type="number" name="ingresos_mensuales" required />
               </td>
             </tr>
             <tr>
               <td>¿Porque quiere adoptar una mascota?</td>
               <td>
-                <input type="text" name="motivo_adopcion" />
+                <input type="text" name="motivo_adopcion" required />
               </td>
             </tr>
             <tr>
               <td>¿Posee algun espacio libre?</td>
               <td>
-                <input type="text" name="posee_espacio_libre" list="sino" />
+                <input type="checkbox" name="posee_espacio_libre" />
               </td>
             </tr>
           </tbody>
