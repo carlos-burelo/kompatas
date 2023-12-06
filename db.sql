@@ -1,108 +1,101 @@
-DROP DATABASE IF EXISTS kompatas_db;
-CREATE DATABASE kompatas_db;
-USE kompatas_db;
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         8.0.34 - MySQL Community Server - GPL
+-- SO del servidor:              Win64
+-- HeidiSQL Versión:             12.5.0.6677
+-- --------------------------------------------------------
 
-CREATE TABLE usuario_admin (
-    id_usuario_admin int primary key auto_increment,
-    nombre varchar(45),
-    apellido_paterno varchar(45),
-    apellido_materno varchar(45),
-    contrasena varchar(11),
-    telefono varchar(11)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE usuario_interesado (
-    id_usuario_interesado int primary key auto_increment,
-    nombre varchar(45),
-    apellido_1 varchar(45),
-    apellido_2 varchar(45),
-    direccion varchar(100),
-    correo varchar(45),
-    contrasena varchar(11),
-    telefono varchar(11)
-);
 
-CREATE TABLE refugio (
-    id_refugio int primary key auto_increment,
-    nombre_refugio varchar(30),
-    tipo_refugio varchar(30),
-    descripcion varchar(1000),
-    estado varchar(45)
-);
+-- Volcando estructura de base de datos para kompatas_db
+CREATE DATABASE IF NOT EXISTS `kompatas_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `kompatas_db`;
 
-CREATE TABLE mascota (
-    id_mascota int primary key auto_increment,
-    tipo varchar(80),
-    nombre_mascota varchar(80),
-    color varchar(80),
-    tamano varchar(30),
-    peso decimal
-);
+-- Volcando estructura para tabla kompatas_db.adopcion
+CREATE TABLE IF NOT EXISTS `adopcion` (
+  `id_adopcion` int NOT NULL AUTO_INCREMENT,
+  `id_mascota` int DEFAULT NULL,
+  `id_usuario` int DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `estado_adopcion` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_adopcion`),
+  KEY `id_mascota` (`id_mascota`),
+  KEY `id_usuario` (`id_usuario`),
+  CONSTRAINT `adopcion_ibfk_1` FOREIGN KEY (`id_mascota`) REFERENCES `mascota` (`id_mascota`),
+  CONSTRAINT `adopcion_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE adopcion (
-    id_adopcion int primary key auto_increment,
-    id_mascota int,
-    id_usuario_interesado int,
-    fecha date,
-    estado varchar(45),
-    nombre_mascota varchar(45),
-    nombre_usuario varchar(45),
-    direccion_usuario varchar(500),
-    telefono_usuario varchar(11),
-    FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota),
-    FOREIGN KEY (id_usuario_interesado) REFERENCES usuario_interesado(id_usuario_interesado)
-);
+-- Volcando datos para la tabla kompatas_db.adopcion: ~2 rows (aproximadamente)
+INSERT INTO `adopcion` (`id_adopcion`, `id_mascota`, `id_usuario`, `fecha`, `estado_adopcion`) VALUES
+	(1, 1, 2, '2023-10-15', 'En proceso'),
+	(2, 2, 1, '2023-11-05', 'En proceso');
 
--- Insertar datos en la tabla usuario_admin
-INSERT INTO usuario_admin (nombre, apellido_paterno, apellido_materno, contrasena, telefono)
-VALUES
-    ('Julio', 'Gallegos', 'Osorio', 'kompatas25', '9142458325'),
-    ('Guadalupe', 'Escalante', 'Ramirez', 'kompatas26', '9142469435'),
-    ('Emilio', 'Sanchez', 'Hernández', 'kompatas37', '9142471045'),
-    ('Eduardo', 'Custodio', 'Aguilar', 'kompatas38', '9142481155'),
-    ('Enrique', 'Jimenez', 'Ramos', 'kompatas39', '9142491265'),
-    ('Ruben', 'Díaz', 'Mendez', 'kompatas40', '9142471045');
+-- Volcando estructura para tabla kompatas_db.formulario
+CREATE TABLE IF NOT EXISTS `formulario` (
+  `id_formulario` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) DEFAULT NULL,
+  `direccion` varchar(200) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `empleo` varchar(100) DEFAULT NULL,
+  `tiene_casa_propia` tinyint(1) DEFAULT NULL,
+  `ingresos_mensuales` decimal(10,2) DEFAULT NULL,
+  `motivo_adopcion` varchar(500) DEFAULT NULL,
+  `posee_espacio_libre` tinyint(1) DEFAULT NULL,
+  `id_usuario` int DEFAULT NULL,
+  PRIMARY KEY (`id_formulario`),
+  KEY `id_usuario` (`id_usuario`),
+  CONSTRAINT `formulario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Insertar datos en la tabla usuario_interesado
-INSERT INTO usuario_interesado (nombre, apellido_1, apellido_2, direccion, correo, contrasena, telefono)
-VALUES
-    ('Andrés', 'García', 'De la O', 'Calle Benito Juárez #14 Colonia las lomas', 'andres@gmail.com', 'kompatas12', '9372458325'),
-    ('José', 'Gómez', 'Ramos', 'Calle Venustiano Carranza s/n Colonia Gil y Saenz', 'jose@gmail.com', 'kompatas13', '9372469435'),
-    ('Carlos', 'Custodio', 'López', 'Calle Benito Juárez #14 Colonia las lomas', 'carlos@gmail.com', 'kompatas14', '9372471045'),
-    ('Daniel', 'Cruz', 'Aguilar', 'Calle Rita Estrada #56 Colonia Boulevard', 'Daniel@gmail.com', 'kompatas15', '9372481155'),
-    ('Andrea', 'Sanchez', 'Hernández', 'Calle Porfirio Díaz #43 Colonia el aguila', 'andrea@gmail.com', 'kompatas16', '9372491265'),
-    ('Antonio', 'Hernández', 'Ocaña', 'Calle Andres Sanchez Magallanes s/n Colonia laa florida', 'antonio@gmail.com', 'kompatas17', '9372471045');
+-- Volcando datos para la tabla kompatas_db.formulario: ~1 rows (aproximadamente)
+INSERT INTO `formulario` (`id_formulario`, `nombre`, `direccion`, `telefono`, `empleo`, `tiene_casa_propia`, `ingresos_mensuales`, `motivo_adopcion`, `posee_espacio_libre`, `id_usuario`) VALUES
+	(1, 'Nombre Formulario', 'Dirección Ejemplo', '123456789', 'Empleado', 1, 2000.00, 'Quiero adoptar una mascota porque...', 1, 2);
 
--- Insertar datos en la tabla refugio
-INSERT INTO refugio (nombre_refugio, tipo_refugio, descripcion, estado)
-VALUES
-    ('FAPAM', 'Refugio de perros', 'Federación de Asociaciones Protectoras y de Defensa Animal', 'Tabasco'),
-    ('ANAA', 'Refugio de perros', 'Asociación Nacional Amigos de los Animales', 'Tabasco'),
-    ('Amigos del Perro', 'Refugio de perros', 'Trabajan desde 1995 en la recogida de animales abandonados y su reinserción en nuevas familias', 'Tabasco'),
-    ('Kiwokoadopta', 'Refugio de perros', 'Trabaja para ayudar a los animales que no lo han tenido fácil', 'Tabasco'),
-    ('ZarpasyColmillos', 'Refugio de perros', 'Brinda la opción de adoptar y colaborar con la asociación', 'Tabasco');
+-- Volcando estructura para tabla kompatas_db.mascota
+CREATE TABLE IF NOT EXISTS `mascota` (
+  `id_mascota` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) DEFAULT NULL,
+  `raza` varchar(80) DEFAULT NULL,
+  `color` varchar(80) DEFAULT NULL,
+  `tamaño` varchar(30) DEFAULT NULL,
+  `url_imagen` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id_mascota`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Insertar datos en la tabla mascota
-INSERT INTO mascota (tipo, nombre_mascota, color, tamano, peso)
-VALUES
-    ('Alaskan Klee Kai', 'Rocky', 'Blanco con manchas negras', 'Mediano', 4.6),
-    ('Rat Terrier', 'Teo', 'Blanco con manchas negras', 'Mediano', 4.1),
-    ('Yorkipoo', 'Max', 'Negro', 'Chico', 3.4),
-    ('Pomeranian', 'Leo', 'Café con destellos blancos', 'Chico', 2.5),
-    ('Pumi', 'Nilo', 'Gris', 'Chico', 2.0),
-    ('Bolonka', 'Lucas', 'Negro', 'Mediano', 3.2),
-    ('Bichón frisé', 'Miki', 'Blanco', 'Mediano', 4.1),
-    ('Alaskan Klee Kai', 'Luca', 'Blanco con manchas negras', 'Mediano', 4.6),
-    ('Buldog', 'Zeus', 'Café', 'Mediano', 5.2),
-    ('Dachshund', 'Toby', 'Negro con manchas café', 'Chico', 2.0),
-    ('Pug', 'Rey', 'Blanco', 'Mediano', 4.8),
-    ('Jack Russell Terrier', 'Zeus', 'Blanco con manchas marrones', 'Chico', 3.5);
+-- Volcando datos para la tabla kompatas_db.mascota: ~2 rows (aproximadamente)
+INSERT INTO `mascota` (`id_mascota`, `nombre`, `raza`, `color`, `tamaño`, `url_imagen`) VALUES
+	(1, 'Bobby', 'Labrador', 'Negro', 'Grande', 'https://url_imagen_bobby'),
+	(2, 'Luna', 'Golden Retriever', 'Dorado', 'Grande', 'https://url_imagen_luna');
 
--- Insertar datos en la tabla adopcion
-INSERT INTO adopcion (id_mascota, id_usuario_interesado, fecha, estado, nombre_mascota, nombre_usuario, direccion_usuario, telefono_usuario)
-VALUES
-    (2, 3, '2022-04-16', 'En proceso', 'Teo', 'Carlos Custodio', 'Calle Benito Juárez #14 Colonia las lomas', '9372471045'),
-    (7, 5, '2023-05-04', 'En proceso', 'Miki', 'Andrea Sanchez', 'Calle Porfirio Díaz #43 Colonia el aguila', '9372491265'),
-    (10, 2, '2023-08-10', 'En proceso', 'Toby', 'José Gómez', 'Calle Venustiano Carranza s/n Colonia Gil y Saenz', '9372469435'),
-    (1, 6, '2023-10-02', 'En proceso', 'Rocky', 'Antonio Hernández', 'Calle Andres Sanchez Magallanes s/n Colonia la florida', '9372471045'),
-    (3, 4, '2023-08-18', 'En proceso', 'Max', 'Daniel Cruz', 'Calle Rita Estrada #56 Colonia Boulevard', '9372481155');
+-- Volcando estructura para tabla kompatas_db.usuario
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  `apellido_1` varchar(45) DEFAULT NULL,
+  `apellido_2` varchar(45) DEFAULT NULL,
+  `correo` varchar(45) DEFAULT NULL,
+  `contrasena` varchar(100) DEFAULT NULL,
+  `es_admin` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla kompatas_db.usuario: ~4 rows (aproximadamente)
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido_1`, `apellido_2`, `correo`, `contrasena`, `es_admin`) VALUES
+	(1, 'admin', 'Apellido1', 'Apellido2', 'admin@mail.com', 'admin', 1),
+	(2, 'Normal', 'Persona', 'Ejemplo', 'normal@ejemplo.com', 'normalpass', 0),
+	(3, 'Carlos Fernando', 'Burelo', 'Juarez', 'carlos@mail.com', 'root', 0),
+	(4, 'pedro', 'perez', 'suarez', 'pedro@perez.com', 'pedro123', 0);
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

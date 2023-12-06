@@ -1,6 +1,15 @@
 ---
 // Component imports
 import { Layout } from "@globals"
+if (!Astro.cookies.has("usuario")) {
+  // redirect using Response
+  return new Response("", {
+    status: 302, // redirect
+    headers: {
+      Location: "/iniciar-sesion"
+    }
+  })
+}
 ---
 
 <Layout title="Mascotas" bg="/7.jpg">

@@ -2,11 +2,14 @@
 import { Layout } from "@globals"
 export const prerender = false
 
-const cookie = Astro.cookies.get("usuario")
-
-if (!cookie) {
-  console.log("no hay cookie")
-  Astro.redirect("/iniciar-sesion")
+if (!Astro.cookies.has("usuario")) {
+  // redirect using Response
+  return new Response("", {
+    status: 302, // redirect
+    headers: {
+      Location: "/iniciar-sesion"
+    }
+  })
 }
 ---
 

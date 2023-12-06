@@ -7,10 +7,11 @@ export class DB {
   static async connect() {
     if (!this.connection) {
       this.connection = await createConnection({
-        user: process.env.USER ?? 'root',
-        password: process.env.PASS ?? 'root',
-        host: process.env.HOST ?? 'localhost',
-        database: process.env.DATABASE ?? 'kompatas_db',
+        user: import.meta.env.DB_USER,
+        password: import.meta.env.DB_PASS,
+        host: import.meta.env.DB_HOST,
+        database: import.meta.env.DB_NAME ,
+        port: parseInt(import.meta.env.DB_PORT as string),
       });
     }
     return this.connection;

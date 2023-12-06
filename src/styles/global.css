@@ -75,6 +75,7 @@ h1 {
   border-radius: .5em;
   text-transform: uppercase;
   max-width: 70%;
+  text-align: center;
 }
 input {
   color-scheme: light;
