@@ -1,9 +1,16 @@
 ---
-// Component imports
 import { Layout } from "@globals"
+export const prerender = false
+
+const cookie = Astro.cookies.get("usuario")
+
+if (!cookie) {
+  console.log("no hay cookie")
+  Astro.redirect("/iniciar-sesion")
+}
 ---
 
-<Layout title="Menu principal">
+<Layout title="Menu principal" bg="/8.jpg">
   <section>
     <h1>Menú principal</h1>
     <div class="links">

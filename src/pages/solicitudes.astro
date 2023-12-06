@@ -3,51 +3,55 @@
 import { Layout } from "@globals"
 ---
 
-<Layout title="Solicitudes" bg="/5.png">
+<Layout title="Solicitudes" bg="/6.jpg">
   <section>
-    <h1>Solicitudes</h1>
+    <header>
+      <h1>Solicitudes</h1>
+      <nav>
+        <a href="/eliminar-mascota"><img src="/back.svg" alt="back icon" /></a>
+      </nav>
+    </header>
     <div class="contenedor">
       <table>
         <thead>
           <tr>
-            <th>Foto</th>
-            <th>Color</th>
-            <th>Raza</th>
-            <th>Tamaño</th>
+            <th>Solicitante</th>
+            <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>Emilio Perez Gonzales</td>
             <td>
-              <img src="/2.png" alt="Perro" />
+              <div class="opciones">
+                <button>Aceptar</button>
+                <button>Eliminar</button>
+              </div>
             </td>
-            <td>Blanco</td>
-            <td>Chihuahua</td>
-            <td>Pequeño</td>
           </tr>
           <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
             <td>Chihuahua</td>
-            <td>Pequeño</td>
+            <td>
+              <div class="opciones">
+                <button>Aceptar</button>
+                <button>Eliminar</button>
+              </div>
+            </td>
           </tr>
           <tr>
-            <td>
-              <img src="/2.png" alt="Perro" />
-            </td>
-            <td>Blanco</td>
             <td>Chihuahua</td>
-            <td>Pequeño</td>
+            <td>
+              <div class="opciones">
+                <button>Aceptar</button>
+                <button>Eliminar</button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
-      <button>Añadir mascota</button>
     </div>
     <footer>
       <a href="/" class="btn menu">Menu principal</a>
-      <a href="/eliminar-mascota" class="btn comunidad">Eliminar mascota</a>
     </footer>
   </section>
 </Layout>
@@ -75,7 +79,7 @@ import { Layout } from "@globals"
   }
 
   tr th {
-    background-color: var(--morado-claro);
+    background-color: var(--amarillo);
     padding: 0.5em 1em;
     border: solid 2px #fff;
     color: #000;
@@ -83,26 +87,38 @@ import { Layout } from "@globals"
 
   tbody tr {
     opacity: 0.8;
-    background-color: #fff;
     padding: 0.5em 1em;
-
     color: #000;
   }
-  tbody tr td {
+
+  tbody tr td:nth-child(odd) {
     border: solid 3px var(--rosa-claro);
+    background-color: #fff;
   }
 
-  tr > td:nth-child(5) {
-    color: red;
+  tbody tr td:nth-child(even) {
+    background-color: transparent;
   }
 
-  td img {
-    width: 100%;
-    max-width: 80px;
-    max-height: 80px;
-    aspect-ratio: 1;
-    object-fit: cover;
+  tr .opciones {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.2em;
   }
+
+  .opciones button {
+    border: solid 3px var(--rosa-claro) !important;
+    background-color: #fff !important;
+  }
+
+  .opciones button:nth-child(odd) {
+    color: var(--azul-oscuro);
+  }
+  .opciones button:nth-child(even) {
+    color: var(--rojo);
+  }
+
   .contenedor button {
     background-color: var(--morado-claro);
     border: solid 3px #fff;
@@ -115,7 +131,7 @@ import { Layout } from "@globals"
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   footer a {
@@ -123,11 +139,6 @@ import { Layout } from "@globals"
   }
 
   .menu {
-    color: #fff;
-  }
-
-  .comunidad {
-    background-color: var(--verde);
     color: #fff;
   }
 </style>

@@ -1,25 +1,41 @@
 ---
 // Component imports
 import { Layout } from "@globals"
+import fetcher from "src/api"
 ---
 
 <Layout title="Iniciar sesión" bg="/1.jpg">
-	<section>
+  <section>
     <header>
-      <img src="/logo.png" alt="">
+      <img src="/logo.png" alt="" />
       <h2>Adopta a un amigo</h2>
       <h3>¡No compres!</h3>
     </header>
-    <form action="">
-      <input type="text" placeholder="Usuario"/>
-      <input type="password" placeholder="Contraseña"/>
+    <form>
+      <input type="text" placeholder="Correo" name="correo" />
+      <input type="password" placeholder="Contraseña" name="contrasena" />
       <button class="btn">Iniciar sesión</button>
       <a href="/registro" class="btn registrarse">Registrarse</a>
     </form>
     <footer>
       <a href="/admin" class="btn">Admin</a>
     </footer>
-	</section>
+  </section>
+  <script>
+    import fetcher from "src/api"
+
+    const form = document.querySelector("form")
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+      const formData = new FormData(form)
+      const data = Object.fromEntries(formData)
+      const res = await fetcher("/api/iniciar-sesion", data)
+      console.log(res)
+      if (res.data.length > 0) {
+        window.location.href = "/"
+      }
+    })
+  </script>
 </Layout>
 
 <style>
@@ -31,25 +47,30 @@ import { Layout } from "@globals"
   img {
     width: 100%;
     max-width: 250px;
-  
   }
 
   h2 {
+    font-size: 40px;
     text-shadow: 1px 1px 10px #000;
+    font-family: serif;
+    font-weight: 500;
   }
 
   h3 {
     text-shadow: 1px 1px 10px #000;
     color: var(--rosa-claro);
+    font-family: cursive;
+    font-weight: 100;
+    font-size: 30px;
   }
-	section {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 3em;
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
     justify-content: space-around;
-	}
-  
+  }
+
   form {
     display: grid;
     place-items: center;
@@ -69,17 +90,14 @@ import { Layout } from "@globals"
     padding-inline: 2em;
   }
 
-
-
   footer {
     width: 100%;
     display: flex;
     justify-content: flex-end;
   }
   footer a {
-    background-color: var(--verde) !important; 
+    background-color: var(--verde) !important;
     padding-inline: 2em !important;
     color: #fff !important;
   }
-
 </style>

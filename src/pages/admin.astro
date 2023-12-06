@@ -4,24 +4,42 @@ import { Layout } from "@globals"
 ---
 
 <Layout title="Admin" bg="/1.jpg">
-	<section>
-		<h1>Admin</h1>
+  <section>
+    <header>
+      <h1>Admin</h1>
+      <nav>
+        <a href="/iniciar-sesion"> <img src="/back.svg" alt="back icon" /></a>
+      </nav>
+    </header>
     <form action="">
-      <input type="text" placeholder="Usuario"/>
-      <input type="password" placeholder="Contraseña"/>
+      <input type="text" placeholder="Correo" name="correo" />
+      <input type="password" placeholder="Contraseña" name="contrasena" />
       <button class="btn">Aceptar</button>
     </form>
-	</section>
+  </section>
+
+  <script>
+    import fetcher from "src/api"
+
+    const form = document.querySelector("form")
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+      const formData = new FormData(form)
+      const data = Object.fromEntries(formData)
+      const json = await fetcher("/api/admin", data)
+      console.log(json)
+    })
+  </script>
 </Layout>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 3em;
-		justify-content: space-around;
-	}
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    justify-content: space-around;
+  }
   form {
     display: grid;
     place-items: center;
@@ -35,5 +53,4 @@ import { Layout } from "@globals"
     width: fit-content;
     border-color: var(--azul-oscuro);
   }
-
 </style>

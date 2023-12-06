@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": false,
 	"scripts": {
-		"dev": "astro dev",
+		"dev": "astro dev --host",
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
@@ -23,5 +23,9 @@
 		"prettier-plugin-astro": "^0.11.1",
 		"typescript": "^4.6.2",
 		"vite-plugin-pwa": "^0.16.4"
+	},
+	"dependencies": {
+		"@astrojs/vercel": "^5.2.0",
+		"mysql2": "^3.6.5"
 	}
 }

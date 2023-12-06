@@ -5,7 +5,12 @@ import { Layout } from "@globals"
 
 <Layout title="Agregar mascota" bg="/5.png">
   <section>
-    <h1>Agregar mascota</h1>
+    <header>
+      <h1>Agregar mascota</h1>
+      <nav>
+        <a href="/"><img src="/back.svg" alt="back icon" /></a>
+      </nav>
+    </header>
     <div class="contenedor">
       <table>
         <thead>
@@ -43,14 +48,56 @@ import { Layout } from "@globals"
           </tr>
         </tbody>
       </table>
-      <button>Añadir mascota</button>
+      <button id="add-pet">Añadir mascota</button>
     </div>
     <footer>
       <a href="/" class="btn menu">Menu principal</a>
       <a href="/eliminar-mascota" class="btn comunidad">Eliminar mascota</a>
     </footer>
   </section>
+
+  <dialog>
+    <form id="myForm">
+      <h2>Agregar mascota</h2>
+      <label for="name">Foto (URL)</label>
+      <input type="text" id="name" name="foto" />
+
+      <label for="color">Color</label>
+      <input type="text" id="color" name="color" />
+
+      <label for="raza">Raza</label>
+      <input type="text" id="raza" name="raza" />
+
+      <label for="tamaño">Tamaño</label>
+      <input type="text" id="tamaño" name="tamaño" />
+
+      <button type="submit">Enviar</button>
+    </form>
+  </dialog>
 </Layout>
+
+<script>
+  const dialog = document.querySelector("dialog")
+  const form = document.querySelector("form")
+  const addPet = document.querySelector("#add-pet")
+
+  addPet.addEventListener("click", () => {
+    dialog.showModal()
+  })
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault()
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData)
+
+    const res = await fetch("/api/agregar-mascota", {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+
+    dialog.close()
+  })
+</script>
 
 <style>
   section {
@@ -129,5 +176,48 @@ import { Layout } from "@globals"
   .comunidad {
     background-color: var(--verde);
     color: #fff;
+  }
+
+  dialog {
+    color-scheme: light;
+    width: 100%;
+    max-width: 400px;
+    padding: 1em;
+    background-color: #fff;
+    border-radius: 1em;
+  }
+
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  dialog label {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+
+  dialog input {
+    display: block;
+    width: 100%;
+    padding: 0.5em;
+    background-color: var(--rosa-claro);
+    border: solid 2px var(--rosa-claro);
+    border-radius: 0.5em;
+    margin-bottom: 1em;
+  }
+
+  dialog button {
+    background-color: var(--morado-claro);
+    border: solid 2px var(--morado-claro);
+    color: #fff;
+    display: block;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    font-weight: bold;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
   }
 </style>

@@ -13,6 +13,7 @@
   --morado-claro: #94a2eb;
   --violeta-claro: #c1abed;
   --violeta: #cb6ce6;
+  --rojo: #ff0000;
 }
 
 html {
@@ -28,7 +29,7 @@ html {
   text-rendering: optimizeLegibility;
   text-size-adjust: 100%;
   text-align: left;
-  font-family: 'Roboto', sans-serif;
+  font-family: cursive;
 }
 
 body {
@@ -59,9 +60,8 @@ a {
 }
 
 .btn {
-  padding: 1em;
   color: #000;
-  padding: 1em 5em;
+  padding: .75em 5em;
   background: rgb(27,182,203);
   border-radius: 5em;
   border: solid 3px #fff;
@@ -74,6 +74,7 @@ h1 {
   background-color: #000;
   border-radius: .5em;
   text-transform: uppercase;
+  max-width: 70%;
 }
 input {
   color-scheme: light;
@@ -91,4 +92,41 @@ input {
 
 input::placeholder {
   color: #000;
+}
+
+header {
+  width: 100%;
+  display: grid;
+  align-items: center;
+}
+
+header h1 {
+  width: max-content;
+  justify-self: center;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  justify-self: flex-start;
+}
+
+nav a {
+  padding: .6em 1em;
+  background-color: var(--azul-oscuro);
+  border-radius: 3em;
+  display: grid;
+  place-content: center;
+}	
+
+nav a img{
+  width: 30px;
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
 }

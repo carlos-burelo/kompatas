@@ -3,72 +3,99 @@
 import { Layout } from "@globals"
 ---
 
-<Layout title="Agregar mascota" bg="/5.png">
+<Layout title="Agregar mascota" bg="/7.jpg">
   <section>
-    <h1>Agregar mascota</h1>
+    <header>
+      <h1>Adopcion</h1>
+      <nav>
+        <a href="/eliminar-mascota"><img src="/back.svg" alt="back icon" /></a>
+      </nav>
+    </header>
     <div class="contenedor">
       <div class="titlebar">
         Por favor, Rellene los campos solicitados a continuación :)
       </div>
-      <table>
-        <tbody>
-          <tr>
-            <td>Nombre</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>Direccion</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>Telefono</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>Empleo</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>¿Tiene casa propia?</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>¿Cuanto gana mensualmente?</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>¿Porque quiere adoptar una mascota?</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <td>¿Posee algun espacio libre?</td>
-            <td>
-              <input type="text" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button>Enviar</button>
+      <form>
+        <table>
+          <tbody>
+            <tr>
+              <td>Nombre</td>
+              <td>
+                <input type="text" name="nombre" />
+              </td>
+            </tr>
+            <tr>
+              <td>Direccion</td>
+              <td>
+                <input type="text" name="direccion" />
+              </td>
+            </tr>
+            <tr>
+              <td>Telefono</td>
+              <td>
+                <input type="tel" name="telefono" />
+              </td>
+            </tr>
+            <tr>
+              <td>Empleo</td>
+              <td>
+                <input type="text" name="empleo" />
+              </td>
+            </tr>
+            <tr>
+              <td>¿Tiene casa propia?</td>
+              <td>
+                <input type="text" name="tiene_casa_propia" list="sino" />
+              </td>
+            </tr>
+            <tr>
+              <td>¿Cuanto gana mensualmente?</td>
+              <td>
+                <input type="number" name="ingresos_mensuales" />
+              </td>
+            </tr>
+            <tr>
+              <td>¿Porque quiere adoptar una mascota?</td>
+              <td>
+                <input type="text" name="motivo_adopcion" />
+              </td>
+            </tr>
+            <tr>
+              <td>¿Posee algun espacio libre?</td>
+              <td>
+                <input type="text" name="posee_espacio_libre" list="sino" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <datalist id="sino">
+          <option value="Si"></option>
+          <option value="No"></option>
+        </datalist>
+
+        <button id="enviar">Enviar</button>
+      </form>
     </div>
     <footer>
       <a href="/" class="btn menu">Menu principal</a>
       <a href="/estado" class="btn comunidad">Estado</a>
     </footer>
   </section>
+
+  <script>
+    import fetcher from "src/api"
+
+    const form = document.querySelector("form")
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+
+      const formData = new FormData(form)
+      const data = Object.fromEntries(formData)
+      const res = await fetcher("/api/adopcion", data)
+      console.log(res)
+    })
+  </script>
 </Layout>
 
 <style>
@@ -78,6 +105,12 @@ import { Layout } from "@globals"
     align-items: center;
     gap: 3em;
     justify-content: space-around;
+  }
+
+  form {
+    display: grid;
+    place-items: center;
+    gap: 0.5em;
   }
 
   .contenedor {
