@@ -30,7 +30,12 @@ import fetcher from "src/api"
       const formData = new FormData(form)
       const data = Object.fromEntries(formData)
       const res = await fetcher("/api/iniciar-sesion", data)
-      console.log(res)
+
+      if (res.data.error) {
+        alert(res.data.error)
+        return
+      }
+
       if (res.data.length > 0) {
         window.location.href = "/"
       }

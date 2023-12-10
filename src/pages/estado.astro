@@ -1,8 +1,8 @@
 ---
-// Component imports
 import { Layout } from "@globals"
+import { DB } from "../db"
+
 if (!Astro.cookies.has("usuario")) {
-  // redirect using Response
   return new Response("", {
     status: 302, // redirect
     headers: {
@@ -10,60 +10,89 @@ if (!Astro.cookies.has("usuario")) {
     }
   })
 }
+
+const usuario = Astro.cookies.get("usuario").json() as Usuario
+const adopciones = await DB.obtenerAdopcionYMascota(usuario.id_usuario)
+const ultimaAdopcion = adopciones[adopciones.length - 1]
+
+console.log(ultimaAdopcion)
 ---
 
 <Layout title="Estado" bg="/2.png">
   <section>
     <h1>Estado</h1>
-    <form action="">
-      <button disabled class="btn">En proceso</button>
-      <button disabled class="btn">Completado</button>
-    </form>
+    <div class="form">
+      {
+        Boolean(ultimaAdopcion) && (
+          <>
+            <h3>{ultimaAdopcion.nombre}</h3>
+            <img loading="eager" src={ultimaAdopcion.url_imagen} alt="" />
+
+            <h2>Estado de la adopción</h2>
+
+            <button disabled class="btn">
+              {ultimaAdopcion.estado_adopcion}
+            </button>
+          </>
+        )
+      }
+    </div>
     <footer>
       <a href="/" class="btn menu">Menu principal</a>
       <a href="/comunidad" class="btn comunidad">Comunidad</a>
     </footer>
   </section>
+
+  <style>
+    img {
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h2,
+    h3 {
+      color: #000;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3em;
+      justify-content: space-around;
+    }
+    .form {
+      display: grid;
+      place-items: center;
+      grid-template-columns: 1fr;
+      gap: 1em;
+    }
+
+    .form button.btn {
+      background-color: var(--amarillo);
+      padding-block: 0.75em;
+      opacity: 0.8;
+    }
+
+    footer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer a {
+      padding: 1em 1.5em !important;
+    }
+
+    .menu {
+      color: #fff;
+    }
+
+    .comunidad {
+      background-color: var(--verde);
+      color: #fff;
+    }
+  </style>
 </Layout>
-
-<style>
-  section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3em;
-    justify-content: space-around;
-  }
-  form {
-    display: grid;
-    place-items: center;
-    grid-template-columns: 1fr;
-    gap: 1em;
-  }
-
-  form button.btn {
-    background-color: var(--amarillo);
-    padding-block: 0.75em;
-    opacity: 0.8;
-  }
-
-  footer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  footer a {
-    padding: 1em 1.5em !important;
-  }
-
-  .menu {
-    color: #fff;
-  }
-
-  .comunidad {
-    background-color: var(--verde);
-    color: #fff;
-  }
-</style>

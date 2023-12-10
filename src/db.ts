@@ -83,6 +83,13 @@ export class DB {
     return resultado as Adopcion[];
   }
 
+
+  static async obtenerAdopcionYMascota(id_usuario: number) {
+    const connection = await this.connect();
+    const [resultado] = await connection.execute(`SELECT a.*, m.* FROM adopcion a LEFT JOIN mascota m ON a.id_mascota = m.id_mascota WHERE a.id_usuario = ?`, [id_usuario]);
+    return resultado as (Adopcion & Mascota)[];
+  }
+
   static async insertarFormulario(formulario: Partial<Formulario>) {
     const connection = await this.connect();
     const [resultado] = await connection.execute(

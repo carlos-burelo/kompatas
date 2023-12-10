@@ -17,13 +17,15 @@ if (!Astro.cookies.has("usuario")) {
     <header>
       <h1>Admin</h1>
       <nav>
-        <a href="/"><img src="/back.svg" alt="back icon" /></a>
+        <button onclick="history.back()">
+          <img src="/back.svg" alt="back icon" />
+        </button>
       </nav>
     </header>
     <div class="links">
       <a class="btn" href="/agregar-mascota">Agregar mascota</a>
       <a class="btn" href="/eliminar-mascota">Eliminar mascota</a>
-      <a class="btn" href="/comunidad">Solicitudes de adopción</a>
+      <a class="btn" href="/solicitudes">Solicitudes de adopción</a>
     </div>
   </section>
 </Layout>

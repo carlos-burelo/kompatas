@@ -8,7 +8,9 @@ import { Layout } from "@globals"
     <header>
       <h1>Admin</h1>
       <nav>
-        <a href="/iniciar-sesion"> <img src="/back.svg" alt="back icon" /></a>
+        <button onclick="history.back()">
+          <img src="/back.svg" alt="back icon" />
+        </button>
       </nav>
     </header>
     <form action="">
@@ -27,7 +29,12 @@ import { Layout } from "@globals"
       const formData = new FormData(form)
       const data = Object.fromEntries(formData)
       const json = await fetcher("/api/admin", data)
-      console.log(json)
+
+      if (json.status == 200) {
+        location.href = "/admin-panel"
+      } else {
+        alert("Datos incorrectos")
+      }
     })
   </script>
 </Layout>

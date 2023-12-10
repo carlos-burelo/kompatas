@@ -14,8 +14,6 @@ if (!Astro.cookies.has("usuario")) {
 }
 
 const solicitudes = await DB.obtenerSolicitudesPendientes()
-
-console.log(solicitudes)
 ---
 
 <Layout title="Solicitudes" bg="/6.jpg">
@@ -23,7 +21,9 @@ console.log(solicitudes)
     <header>
       <h1>Solicitudes</h1>
       <nav>
-        <a href="/eliminar-mascota"><img src="/back.svg" alt="back icon" /></a>
+        <button onclick="history.back()">
+          <img src="/back.svg" alt="back icon" />
+        </button>
       </nav>
     </header>
     <div class="contenedor">
@@ -68,13 +68,9 @@ console.log(solicitudes)
     </footer>
   </section>
   <script>
-    document.querySelector("#aceptar").addEventListener("click", aceptar)
-    document.querySelector("#denegar").addEventListener("click", declinar)
-
     async function aceptar(e) {
       const id = e.target.dataset.id
-
-      console.log(e)
+      console.log(id)
       const res = await fetch(`/api/solicitudes`, {
         method: "PUT",
         body: JSON.stringify({ id })
@@ -86,6 +82,7 @@ console.log(solicitudes)
     }
 
     async function declinar(e) {
+      console.log(e)
       const id = e.target.dataset.id
       const res = await fetch(`/api/solicitudes`, {
         method: "DELETE",
@@ -96,6 +93,8 @@ console.log(solicitudes)
         window.location.reload()
       }
     }
+    document.querySelector("#aceptar").addEventListener("click", aceptar)
+    document.querySelector("#denegar").addEventListener("click", declinar)
   </script>
 </Layout>
 

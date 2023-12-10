@@ -13,15 +13,6 @@ if (!Astro.cookies.has("usuario")) {
 const { value } = Astro.cookies.get("usuario")
 const usuario: Usuario = JSON.parse(value)
 
-if (!Boolean(usuario.es_admin)) {
-  return new Response("", {
-    status: 302, // redirect
-    headers: {
-      Location: "/"
-    }
-  })
-}
-
 const url = new URL(Astro.url)
 const id_mascota = url.searchParams.get("id_mascota")
 ---
@@ -38,7 +29,9 @@ const id_mascota = url.searchParams.get("id_mascota")
     <header>
       <h1>Adopcion</h1>
       <nav>
-        <a href="/eliminar-mascota"><img src="/back.svg" alt="back icon" /></a>
+        <button onclick="history.back()">
+          <img src="/back.svg" alt="back icon" />
+        </button>
       </nav>
     </header>
     <div class="contenedor">
@@ -125,16 +118,19 @@ const id_mascota = url.searchParams.get("id_mascota")
 
   <script>
     import fetcher from "src/api"
-
     const form = document.querySelector("form")
-
     form.addEventListener("submit", async (e) => {
       e.preventDefault()
-
       const formData = new FormData(form)
       const data = Object.fromEntries(formData)
       const res = await fetcher("/api/adopcion", data)
-      console.log(res)
+
+      if (res.data.error) {
+        alert(res.data.error)
+      } else {
+        alert("Solicitud enviada")
+        location.href = "/estado"
+      }
     })
   </script>
 </Layout>

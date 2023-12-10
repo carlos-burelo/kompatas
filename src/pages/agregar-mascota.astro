@@ -31,7 +31,9 @@ const mascotas = await DB.obtenerMascotasDisponibles()
     <header>
       <h1>Agregar mascota</h1>
       <nav>
-        <a href="/"><img src="/back.svg" alt="back icon" /></a>
+        <button onclick="history.back()">
+          <img src="/back.svg" alt="back icon" />
+        </button>
       </nav>
     </header>
     <div class="contenedor">

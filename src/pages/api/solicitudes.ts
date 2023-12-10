@@ -15,6 +15,7 @@ export async function PUT(params, request: Request) {
 export async function DELETE(params, request: Request) {
   try {
     const { id } = await request.json();
+    console.log(id);
     await DB.rechazarSolicitud(id);
     return new Response(JSON.stringify({ status: "success"}), { status: 200 });
   } catch (error) {

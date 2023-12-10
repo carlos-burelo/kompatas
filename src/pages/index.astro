@@ -11,17 +11,48 @@ if (!Astro.cookies.has("usuario")) {
     }
   })
 }
+
+const usuario = Astro.cookies.get("usuario").json()
 ---
 
 <Layout title="Menu principal" bg="/8.jpg">
   <section>
     <h1>Menú principal</h1>
     <div class="links">
+      {
+        Boolean(usuario.es_admin) && (
+          <a class="btn" href="/admin-panel">
+            Admin
+          </a>
+        )
+      }
       <a class="btn" href="/mascotas">Mascotas</a>
       <a class="btn" href="/adopcion">Adopcion</a>
       <a class="btn" href="/comunidad">Comunidad</a>
+      {
+        Boolean(!usuario.es_admin) && (
+          <a class="btn" href="/estado">
+            Estado
+          </a>
+        )
+      }
+
+      <button class="btn" id="cerrar-sesion">Cerrar sesión</button>
     </div>
   </section>
+
+  <script>
+    document
+      .getElementById("cerrar-sesion")
+      .addEventListener("click", async () => {
+        const res = await fetch("/api/iniciar-sesion", {
+          method: "DELETE"
+        })
+        if (res.ok) {
+          window.location.href = "/iniciar-sesion"
+        }
+      })
+  </script>
 </Layout>
 
 <style>
@@ -29,7 +60,6 @@ if (!Astro.cookies.has("usuario")) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8em;
     justify-content: space-around;
   }
 
@@ -45,5 +75,9 @@ if (!Astro.cookies.has("usuario")) {
       rgba(27, 182, 203, 1) 0%,
       rgba(237, 211, 93, 1) 100%
     );
+  }
+
+  .links button {
+    background-color: var(--violeta);
   }
 </style>

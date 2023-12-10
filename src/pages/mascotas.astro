@@ -3,7 +3,6 @@
 import { Layout } from "@globals"
 import { DB } from "src/db"
 if (!Astro.cookies.has("usuario")) {
-  // redirect using Response
   return new Response("", {
     status: 302, // redirect
     headers: {
@@ -20,7 +19,9 @@ const mascotas = await DB.obtenerMascotasDisponibles()
     <header>
       <h1>Mascotas</h1>
       <nav>
-        <a href="/"> <img src="/back.svg" alt="back icon" /></a>
+        <button onclick="history.back()">
+          <img src="/back.svg" alt="back icon" />
+        </button>
       </nav>
     </header>
 
@@ -103,15 +104,14 @@ const mascotas = await DB.obtenerMascotasDisponibles()
     opacity: 0.8;
     background-color: #fff;
     padding: 0.5em 1em;
-
     color: #000;
   }
   tbody tr td {
     border: solid 3px var(--rosa-claro);
   }
 
-  tr > td:nth-child(5) {
-    color: red;
+  tr > td:nth-child(5) a {
+    color: rgb(0, 0, 0);
   }
 
   td img {

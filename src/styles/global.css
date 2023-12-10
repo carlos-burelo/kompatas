@@ -114,15 +114,16 @@ nav {
   justify-self: flex-start;
 }
 
-nav a {
+nav button {
   padding: .6em 1em;
   background-color: var(--azul-oscuro);
   border-radius: 3em;
   display: grid;
+  border: none;
   place-content: center;
 }	
 
-nav a img{
+nav button img{
   width: 30px;
 }
 
