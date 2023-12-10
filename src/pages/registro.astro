@@ -32,7 +32,19 @@ import { Layout } from "@globals"
       const formData = new FormData(form)
       const data = Object.fromEntries(formData)
       const json = await fetcher("/api/registro", data)
-      console.log(json)
+
+      if (json.data.error) {
+        alert(json.data.error)
+        return
+      } else {
+        const res = await fetcher("/api/iniciar-sesion", data)
+        if (res.data.error) {
+          alert(res.data.error)
+          return
+        } else {
+          window.location.href = "/"
+        }
+      }
     })
   </script>
 </Layout>
